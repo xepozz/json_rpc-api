@@ -7,7 +7,7 @@ namespace Rpc\Providers;
 use Phalcon\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use Rpc\Application;
+use Rpc\App;
 
 /**
  * Register the global configuration as config
@@ -25,8 +25,8 @@ class ConfigProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        /** @var Application $application */
-        $application = $di->getShared(Application::APPLICATION_PROVIDER);
+        /** @var App $application */
+        $application = $di->getShared(App::APPLICATION_PROVIDER);
         /** @var string $rootPath */
         $rootPath = $application->getRootPath();
         $di->setShared(

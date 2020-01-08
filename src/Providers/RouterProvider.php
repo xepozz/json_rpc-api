@@ -8,7 +8,7 @@ use Exception;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Router;
-use Rpc\Application;
+use Rpc\App;
 
 class RouterProvider implements ServiceProviderInterface
 {
@@ -23,8 +23,8 @@ class RouterProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $di): void
     {
-        /** @var Application $application */
-        $application = $di->getShared(Application::APPLICATION_PROVIDER);
+        /** @var App $application */
+        $application = $di->getShared(App::APPLICATION_PROVIDER);
         /** @var string $basePath */
         $basePath = $application->getRootPath();
         $di->set(

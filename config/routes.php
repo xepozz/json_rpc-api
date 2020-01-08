@@ -8,12 +8,16 @@ use Phalcon\Mvc\Router;
  * @var $router Router
  */
 
-$router->add('/confirm/{code}/{email}', [
-    'controller' => 'user_control',
-    'action'     => 'confirmEmail',
+$router->add('/shorten', [
+    'controller' => 'shorten',
+    'action'     => 'index',
+]);
+$router->add('/shorten2', [
+    'controller' => 'shorten',
+    'action'     => 'index',
 ]);
 
-$router->add('/reset-password/{code}/{email}', [
-    'controller' => 'user_control',
-    'action'     => 'resetPassword',
-]);
+//$router->add('/reset-password/{code}/{email}', [
+//    'controller' => 'user_control',
+//    'action'     => 'resetPassword',
+//]);

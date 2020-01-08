@@ -31,8 +31,8 @@ function container()
  */
 function root_path(string $prefix = ''): string
 {
-    /** @var Application $application */
-    $application = container(Application::APPLICATION_PROVIDER);
+    /** @var App $application */
+    $application = container(App::APPLICATION_PROVIDER);
 
     return join(DIRECTORY_SEPARATOR, [$application->getRootPath(), ltrim($prefix, DIRECTORY_SEPARATOR)]);
 }
