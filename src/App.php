@@ -2,8 +2,8 @@
 
 namespace Rpc;
 
-use Cake\Utility\Inflector;
 use Phalcon\Di\FactoryDefault;
+use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Micro;
 
 class App extends Micro
@@ -13,21 +13,24 @@ class App extends Micro
 
     public function __construct(string $rootPath)
     {
-        $this->rootPath = $rootPath;
-        $this->di = new FactoryDefault();
+        parent::__construct(new FactoryDefault());
 
+        $this->rootPath = $rootPath;
         $this->di->setShared(App::APPLICATION_PROVIDER, $this);
+
         $this->initProviders();
         $this->init();
     }
 
     private function initProviders()
     {
-        $filename = dirname(__DIR__) . '/config/providers.php';
+        $filename = $this->getRootPath() . '/config/providers.php';
+
         if (!file_exists($filename) || !is_readable($filename)) {
             throw new \Exception('File providers.php does not exist or is not readable.');
         }
         $providers = include_once $filename;
+
         foreach ($providers as $providerClass) {
             /** @var ServiceProviderInterface $provider */
             $provider = new $providerClass;
@@ -38,23 +41,34 @@ class App extends Micro
     private function init()
     {
         $app = $this;
+        $router = $app->getDI()->get('router');
         $this->map(
             '/',
-            function () use ($app) {
-                $method = 'shorten';
-                $controller = Inflector::camelize($method);
+            function () use ($app, $router) {
+                /* @var \Phalcon\Mvc\Router $router */
                 $body = $app->request;
                 $actionAlias = $body->getPost('method');
-                $app->router->handle('/' . $actionAlias);
-//            $controller = $app->dispatcher->dispatch();
-                print_r(count($app->router->getRoutes()));
-                print_r('method: ' . $method);
-                print_r('result: ' . $app->router->getControllerName());
-                exit();
+                $str = '/' . $actionAlias;
+                $res = $router->handle($str);
+////            $controller = $app->dispatcher->dispatch();
+//                print_r(PHP_EOL . count($router->getRoutes()));
+//                print_r(PHP_EOL . 'Handle ' . $str);
+//                print_r(PHP_EOL . 'method: ' . $method);
+//                print_r("\n");
+//                print_r('result: ' . $router->getControllerName());
 
-                return $app->dispatcher->forward();
 
-                return $_POST;
+                $controllerClass = $router->getControllerName();
+
+                $controller = new $controllerClass();
+
+                return call_user_func_array(
+                    [
+                        $controller,
+                        $router->getActionName(),
+                    ],
+                    []
+                );
             }
         );
     }

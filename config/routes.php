@@ -9,11 +9,15 @@ use Phalcon\Mvc\Router;
  */
 
 $router->add('/shorten', [
-    'controller' => 'shorten',
+    'controller' => \Rpc\Controllers\ShortenController::class,
     'action'     => 'index',
 ]);
 $router->add('/shorten2', [
-    'controller' => 'shorten',
+    'controller' => 'shorten2',
+    'action'     => 'index',
+]);
+$router->add('/shorten3', [
+    'controller' => 'shorten3',
     'action'     => 'index',
 ]);
 
