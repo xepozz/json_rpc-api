@@ -46,17 +46,11 @@ class App extends Micro
             '/',
             function () use ($app, $router) {
                 /* @var \Phalcon\Mvc\Router $router */
-                $body = $app->request;
-                $actionAlias = $body->getPost('method');
-                $str = '/' . $actionAlias;
-                $res = $router->handle($str);
-////            $controller = $app->dispatcher->dispatch();
-//                print_r(PHP_EOL . count($router->getRoutes()));
-//                print_r(PHP_EOL . 'Handle ' . $str);
-//                print_r(PHP_EOL . 'method: ' . $method);
-//                print_r("\n");
-//                print_r('result: ' . $router->getControllerName());
+                $request = $app->request;
+                $actionName = $request->getPost('method');
+                $actionParams = $request->getPost('params');
 
+                $router->handle('/' . $actionName);
 
                 $controllerClass = $router->getControllerName();
 
@@ -67,7 +61,7 @@ class App extends Micro
                         $controller,
                         $router->getActionName(),
                     ],
-                    []
+                    [$actionParams]
                 );
             }
         );
