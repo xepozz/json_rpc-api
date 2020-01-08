@@ -1,20 +1,28 @@
 <?php
 
-namespace App\Api;
+namespace Rpc\Api;
 
 use Datto\JsonRpc\Evaluator;
 use Datto\JsonRpc\Examples\Library\Math;
 use Datto\JsonRpc\Exceptions\ArgumentException;
-use Datto\JsonRpc\Exceptions\MethodException;
+use Phalcon\Mvc\Micro;
 
 class Api implements Evaluator
 {
+    private Micro $app;
+
+    public function __construct(Micro $app)
+    {
+        $this->app = $app;
+    }
+
     public function evaluate($method, $arguments)
     {
-        if ($method === 'add') {
-            return self::add($arguments);
-        }
-        throw new MethodException();
+        $router = new \Phalcon\Mvc\Router();
+        $router->add('shorten', 'ShortenController::index');
+        $this->app->setService('router', $router, true);
+
+        return $this->app->handle($method);
     }
 
     private static function add($arguments)

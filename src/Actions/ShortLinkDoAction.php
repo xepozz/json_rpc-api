@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace Rpc\Actions;
 
 class ShortLinkDoAction extends AbstractAction
 {

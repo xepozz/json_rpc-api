@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Actions;
+namespace Rpc\Actions;
 
-use App\Exceptions\BadRequestException;
 use GuzzleHttp\Client;
 use Psr\Http\Message\StreamInterface;
+use Rpc\Exceptions\BadRequestException;
 use Throwable;
 
 abstract class AbstractAction

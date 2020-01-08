@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Providers;
+namespace Rpc\Providers;
 
-use App\Application;
 use Phalcon\Config;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
+use Rpc\Application;
 
 /**
  * Register the global configuration as config

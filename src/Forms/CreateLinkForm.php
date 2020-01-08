@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Forms;
+namespace Rpc\Forms;
 
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;

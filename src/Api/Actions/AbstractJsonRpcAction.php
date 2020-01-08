@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Actions;
+namespace Rpc\Api\Actions;
 
 use Datto\JsonRpc\Client;
 

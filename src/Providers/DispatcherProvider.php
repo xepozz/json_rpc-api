@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Providers;
+namespace Rpc\Providers;
 
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
@@ -25,7 +25,7 @@ class DispatcherProvider implements ServiceProviderInterface
             $this->providerName,
             function () {
                 $dispatcher = new Dispatcher();
-                $dispatcher->setDefaultNamespace('App\Controllers');
+                $dispatcher->setDefaultNamespace('Rpc\Controllers');
 
                 return $dispatcher;
             }

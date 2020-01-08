@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Providers;
+namespace Rpc\Providers;
 
 use Phalcon\Config;
 use Phalcon\Db\Adapter\Pdo;
@@ -10,7 +10,7 @@ use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use RuntimeException;
 
-use function App\root_path;
+use function Rpc\root_path;
 
 class DbProvider implements ServiceProviderInterface
 {
