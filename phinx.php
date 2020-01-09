@@ -9,10 +9,10 @@ return
     [
         'paths' => [
             'migrations' => [
-                'Rpc\\Migrations' => '%%PHINX_CONFIG_DIR%%/db/migrations'
+                'Api\\Migrations' => '%%PHINX_CONFIG_DIR%%/db/migrations'
             ],
             'seeds' => [
-                'Rpc\\Seeds' => '%%PHINX_CONFIG_DIR%%/db/seeds',
+                'Api\\Seeds' => '%%PHINX_CONFIG_DIR%%/db/seeds',
             ],
         ],
         'environments' => [
