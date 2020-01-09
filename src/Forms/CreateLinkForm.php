@@ -7,14 +7,20 @@ namespace Api\Forms;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
 use Phalcon\Validation\Validator\Callback;
+use Phalcon\Validation\Validator\PresenceOf;
 
 class CreateLinkForm extends Form
 {
     public function initialize()
     {
-        $password = new Text('link');
-        $password->addValidators(
+        $link = new Text('link');
+        $link->addValidators(
             [
+                new PresenceOf(
+                    [
+                        'message' => 'The :field is required',
+                    ]
+                ),
                 new Callback(
                     [
                         'callback' => function ($data) {
@@ -22,11 +28,11 @@ class CreateLinkForm extends Form
 
                             return preg_match($pattern, $data['link']) === 1;
                         },
-                        'message' => ':field even number of products are accepted',
+                        'message' => ':field contain invalid url',
                     ]
                 ),
             ]
         );
-        $this->add($password);
+        $this->add($link);
     }
 }
