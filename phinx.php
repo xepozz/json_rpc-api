@@ -11,6 +11,9 @@ return
             'migrations' => [
                 'Rpc\\Migrations' => '%%PHINX_CONFIG_DIR%%/db/migrations'
             ],
+            'seeds' => [
+                'Rpc\\Seeds' => '%%PHINX_CONFIG_DIR%%/db/seeds',
+            ],
         ],
         'environments' => [
             'default_migration_table' => 'phinxlog',
