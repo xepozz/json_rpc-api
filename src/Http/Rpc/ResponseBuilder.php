@@ -25,7 +25,7 @@ class ResponseBuilder
         return $new;
     }
 
-    public function withError(ErrorObject $error): self
+    public function withError(?ErrorObject $error): self
     {
         $new = clone $this;
         $new->error = $error;

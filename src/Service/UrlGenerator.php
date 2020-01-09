@@ -3,6 +3,8 @@
 namespace Rpc\Service;
 
 use Phalcon\Di\Injectable;
+use Rpc\Components\ErrorCollector;
+use Rpc\Exceptions\ValidationFailedException;
 use Rpc\Models\Links;
 
 class UrlGenerator extends Injectable
@@ -11,11 +13,10 @@ class UrlGenerator extends Injectable
 
     public function generate(string $link)
     {
-        $db = $this->getDI()->getService('db');
-
         do {
             $id = $this->generateUniqueIdentifier();
         } while ($this->exist($id));
+
         $this->insert($id, $link);
 
         return $id;
@@ -30,15 +31,24 @@ class UrlGenerator extends Injectable
 
     private function exist(string $id): bool
     {
-        return Links::count(['uniqueId' => $id]) > 0;
+        return Links::count(
+                [
+                    'conditions' => 'uniqueId = :id:',
+                    'bind' => [
+                        'id' => $id,
+                    ],
+                ]
+            ) > 0;
     }
 
-    private function insert(string $id, string $link)
+    private function insert(string $id, string $link): void
     {
         $model = new Links(['uniqueId' => $id, 'link' => $link]);
         if (!$model->save()) {
-            var_dump($model);
-            exit();
+            /* @var $collector \Rpc\Components\ErrorCollector */
+            $collector = $this->getDI()->get(ErrorCollector::class);
+
+            throw new ValidationFailedException($collector->collect($model));
         }
     }
 }

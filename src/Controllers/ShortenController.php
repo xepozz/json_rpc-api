@@ -2,6 +2,7 @@
 
 namespace Rpc\Controllers;
 
+use Rpc\Components\ErrorCollector;
 use Rpc\Exceptions\ValidationFailedException;
 use Rpc\Forms\CreateLinkForm;
 use Rpc\Http\Rpc\AbstractController;
@@ -16,23 +17,17 @@ class ShortenController extends AbstractController
 
         $form = new CreateLinkForm();
         if (!$form->isValid($params)) {
-            return $this->error($this->collectErrors($form));
+            /* @var $collector \Rpc\Components\ErrorCollector */
+            $collector = $this->getDI()->get(ErrorCollector::class);
+
+            return $this->error(new ValidationFailedException($collector->collect($form)));
         }
         $link = $params['link'];
 
-        return $this->success($urlGenerator->generate($link));
-    }
-
-    private function collectErrors(CreateLinkForm $form)
-    {
-        $errors = [];
-        foreach ($form->getMessages() as $message) {
-            $errors[] = [
-                'field' => $message->getField(),
-                'message' => $message->getMessage(),
-            ];
+        try {
+            return $this->success($urlGenerator->generate($link));
+        } catch (ValidationFailedException $e) {
+            return $this->error($e);
         }
-
-        return new ValidationFailedException($errors);
     }
 }

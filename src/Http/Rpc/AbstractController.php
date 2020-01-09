@@ -25,8 +25,10 @@ class AbstractController extends Controller
             $errorObject = new ErrorObject($error->getCode(), (string)$error->getMessage(), $error->getData());
         } elseif ($error instanceof \Throwable) {
             $errorObject = new ErrorObject($error->getCode(), (string)$error->getMessage());
-        } else {
+        } elseif ($error !== null) {
             $errorObject = new ErrorObject(-32000, (string)$error);
+        } else {
+            $errorObject = null;
         }
 
         return $this->response->setJsonContent(
