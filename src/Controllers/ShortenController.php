@@ -2,29 +2,29 @@
 
 namespace Rpc\Controllers;
 
-use Phalcon\Mvc\Controller;
 use Rpc\Forms\CreateLinkForm;
+use Rpc\Http\AbstractRpcController;
 
-class ShortenController extends Controller
+class ShortenController extends AbstractRpcController
 {
     public function index(array $params)
     {
         $form = new CreateLinkForm();
-        if ($this->request->isPost() && !$form->isValid($this->request->getPost())) {
-            return $this->collectErrors($form);
+        if (!$form->isValid($this->request->getPost())) {
+            return $this->error($this->collectErrors($form));
         }
         $link = $params['link'];
 
-        return $link;
+        return $this->success($link);
     }
 
-    private function collectErrors(CreateLinkForm $form): array
+    private function collectErrors(CreateLinkForm $form)
     {
         $errors = [];
         foreach ($form->getMessages() as $message) {
-            $errors[] = (string)$message;
+            $errors[] = $message->getMessage();
         }
 
-        return $errors;
+        return implode($errors);
     }
 }
