@@ -3,6 +3,7 @@
 namespace Rpc\Http\Rpc;
 
 use Phalcon\Mvc\Controller;
+use Rpc\Exceptions\Rpc\UserException;
 
 class AbstractController extends Controller
 {
@@ -16,19 +17,22 @@ class AbstractController extends Controller
         return $this->createResponse($content, null);
     }
 
-    /**
-     * @param $result
-     * @param $error
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
-     */
     protected function createResponse($result, $error)
     {
         $this->response->setHeader('Content-Type', 'application/json');
 
+        if ($error instanceof UserException) {
+            $errorObject = new ErrorObject($error->getCode(), (string)$error->getMessage(), $error->getData());
+        } elseif ($error instanceof \Throwable) {
+            $errorObject = new ErrorObject($error->getCode(), (string)$error->getMessage());
+        } else {
+            $errorObject = new ErrorObject(-32000, (string)$error);
+        }
+
         return $this->response->setJsonContent(
             (new ResponseBuilder())
                 ->withId($error === null ? $this->request->getPost('id') : null)
-                ->withError(new ErrorObject(-32000, (string)$error))
+                ->withError($errorObject)
                 ->withResult($result)
                 ->asArray()
         );

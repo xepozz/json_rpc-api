@@ -7,8 +7,8 @@ use Throwable;
 
 class ValidationFailedException extends UserException
 {
-    public function __construct(string $message = '', array $data = null, Throwable $previous = null)
+    public function __construct(array $data, Throwable $previous = null)
     {
-        parent::__construct($message, -32001, $data, $previous);
+        parent::__construct('Validation failed', -32001, $data, $previous);
     }
 }

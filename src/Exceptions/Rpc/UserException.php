@@ -21,4 +21,9 @@ class UserException extends \Exception
         $this->data = $data;
         parent::__construct($message, $code, $previous);
     }
+
+    public function getData(): ?array
+    {
+        return $this->data;
+    }
 }

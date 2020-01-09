@@ -2,6 +2,7 @@
 
 namespace Rpc\Controllers;
 
+use Rpc\Exceptions\ValidationFailedException;
 use Rpc\Forms\CreateLinkForm;
 use Rpc\Http\Rpc\AbstractController;
 
@@ -22,9 +23,12 @@ class ShortenController extends AbstractController
     {
         $errors = [];
         foreach ($form->getMessages() as $message) {
-            $errors[] = $message->getMessage();
+            $errors[] = [
+                'field' => $message->getField(),
+                'message' => $message->getMessage(),
+            ];
         }
 
-        return implode($errors);
+        return new ValidationFailedException($errors);
     }
 }
