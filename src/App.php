@@ -5,10 +5,16 @@ namespace Rpc;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Micro;
+use Rpc\Exceptions\Rpc\InvalidRequestException;
+use Rpc\Exceptions\Rpc\MethodNotFoundException;
+use Rpc\Exceptions\Rpc\ParseErrorException;
+use Rpc\Http\Rpc\ErrorObject;
+use Rpc\Http\Rpc\ResponseBuilder;
 
 class App extends Micro
 {
     const APPLICATION_PROVIDER = 'app';
+
     private string $rootPath;
 
     public function __construct(string $rootPath)
@@ -47,23 +53,57 @@ class App extends Micro
             function () use ($app, $router) {
                 /* @var \Phalcon\Mvc\Router $router */
                 $request = $app->request;
-                $actionName = $request->getPost('method');
-                $actionParams = $request->getPost('params');
 
-                $router->handle('/' . $actionName);
+                if (!$request->isPost()) {
+                    return $this->createErrorResponse(new InvalidRequestException());
+                }
+                if (!is_array($request->getPost())) {
+                    return $this->createErrorResponse(new ParseErrorException());
+                }
+                if (empty($request->getPost('id'))) {
+                    return $this->createErrorResponse(new InvalidRequestException());
+                }
+                if (empty($request->getPost('method')) || !is_string($request->getPost('method'))) {
+                    return $this->createErrorResponse(new InvalidRequestException());
+                }
+
+                $actionParams = $request->getPost('params');
+                $methodName = $request->getPost('method');
+                $router->handle('/' . $methodName);
 
                 $controllerClass = $router->getControllerName();
+                $actionName = $router->getActionName();
 
+                if ($controllerClass === null || !class_exists($controllerClass)) {
+                    return $this->createErrorResponse(new MethodNotFoundException());
+                }
+
+                if (!method_exists($controllerClass, $actionName)) {
+                    return $this->createErrorResponse(new MethodNotFoundException());
+                }
                 $controller = new $controllerClass();
 
-                return call_user_func_array(
-                    [
-                        $controller,
-                        $router->getActionName(),
-                    ],
-                    [$actionParams]
-                );
+                return call_user_func_array([$controller, $actionName], [$actionParams]);
             }
+        );
+    }
+
+    protected function createErrorResponse($error)
+    {
+        $this->response->setHeader('Content-Type', 'application/json');
+
+        if ($error instanceof \Throwable) {
+            $errorObject = new ErrorObject($error->getCode(), (string)$error->getMessage());
+        } else {
+            $errorObject = new ErrorObject(-32000, (string)$error);
+        }
+
+        return $this->response->setJsonContent(
+            (new ResponseBuilder())
+                ->withId($error === null ? $this->request->getPost('id') : null)
+                ->withError($errorObject)
+                ->withResult(null)
+                ->asArray()
         );
     }
 
