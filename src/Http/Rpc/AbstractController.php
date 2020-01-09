@@ -1,10 +1,10 @@
 <?php
 
-namespace Rpc\Http;
+namespace Rpc\Http\Rpc;
 
 use Phalcon\Mvc\Controller;
 
-class AbstractRpcController extends Controller
+class AbstractController extends Controller
 {
     protected function error($content)
     {
@@ -28,7 +28,7 @@ class AbstractRpcController extends Controller
         return $this->response->setJsonContent(
             (new ResponseBuilder())
                 ->withId($error === null ? $this->request->getPost('id') : null)
-                ->withError($error)
+                ->withError(new ErrorObject(-32000, (string)$error))
                 ->withResult($result)
                 ->asArray()
         );

@@ -3,9 +3,9 @@
 namespace Rpc\Controllers;
 
 use Rpc\Forms\CreateLinkForm;
-use Rpc\Http\AbstractRpcController;
+use Rpc\Http\Rpc\AbstractController;
 
-class ShortenController extends AbstractRpcController
+class ShortenController extends AbstractController
 {
     public function index(array $params)
     {

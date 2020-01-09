@@ -1,13 +1,13 @@
 <?php
 
-namespace Rpc\Http;
+namespace Rpc\Http\Rpc;
 
 class ResponseBuilder
 {
     private string $jsonRpc = '2.0';
     private $id;
     private $result;
-    private ?array $error;
+    private ?ErrorObject $error = null;
 
     public function withId($id): self
     {
@@ -25,7 +25,7 @@ class ResponseBuilder
         return $new;
     }
 
-    public function withError($error): self
+    public function withError(ErrorObject $error): self
     {
         $new = clone $this;
         $new->error = $error;
