@@ -1,6 +1,6 @@
 <?php
 
-namespace Rpc\Exceptions;
+namespace Api\Exceptions;
 
 class BadRequestException extends \Exception
 {

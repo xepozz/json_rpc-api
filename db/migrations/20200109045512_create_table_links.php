@@ -1,6 +1,6 @@
 <?php
 
-namespace Rpc\Migrations;
+namespace Api\Migrations;
 
 use Phinx\Migration\AbstractMigration;
 

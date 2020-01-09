@@ -1,11 +1,11 @@
 <?php
 
-namespace Rpc\Service;
+namespace Api\Service;
 
+use Api\Components\ErrorCollector;
+use Api\Exceptions\ValidationFailedException;
+use Api\Models\Links;
 use Phalcon\Di\Injectable;
-use Rpc\Components\ErrorCollector;
-use Rpc\Exceptions\ValidationFailedException;
-use Rpc\Models\Links;
 
 class UrlGenerator extends Injectable
 {

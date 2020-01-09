@@ -1,9 +1,9 @@
 <?php
 
-namespace Rpc\Http\Rpc;
+namespace Api\Http\Rpc;
 
+use Api\Exceptions\Rpc\UserException;
 use Phalcon\Mvc\Controller;
-use Rpc\Exceptions\Rpc\UserException;
 
 class AbstractController extends Controller
 {

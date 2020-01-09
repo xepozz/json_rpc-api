@@ -1,7 +1,7 @@
 <?php
 
 
-use Rpc\App;
+use Api\App;
 
 error_reporting(E_ALL);
 $rootPath = dirname(__DIR__);

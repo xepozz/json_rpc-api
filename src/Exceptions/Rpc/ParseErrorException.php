@@ -1,6 +1,6 @@
 <?php
 
-namespace Rpc\Exceptions\Rpc;
+namespace Api\Exceptions\Rpc;
 
 use Throwable;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rpc\Http\Rpc;
+namespace Api\Http\Rpc;
 
 class ResponseBuilder
 {

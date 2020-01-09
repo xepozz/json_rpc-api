@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Rpc\Providers\ConfigProvider;
-use Rpc\Providers\DbProvider;
-use Rpc\Providers\DispatcherProvider;
-use Rpc\Providers\LoggerProvider;
-use Rpc\Providers\RouterProvider;
+use Api\Providers\ConfigProvider;
+use Api\Providers\DbProvider;
+use Api\Providers\DispatcherProvider;
+use Api\Providers\LoggerProvider;
+use Api\Providers\RouterProvider;
 
 return [
     ConfigProvider::class,

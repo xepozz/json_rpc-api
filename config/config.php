@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phalcon\Logger;
 
-use function Rpc\root_path;
+use function Api\root_path;
 
 return [
     'database'    => [

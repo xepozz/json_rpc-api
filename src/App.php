@@ -1,15 +1,15 @@
 <?php
 
-namespace Rpc;
+namespace Api;
 
+use Api\Exceptions\Rpc\InvalidRequestException;
+use Api\Exceptions\Rpc\MethodNotFoundException;
+use Api\Exceptions\Rpc\ParseErrorException;
+use Api\Http\Rpc\ErrorObject;
+use Api\Http\Rpc\ResponseBuilder;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Micro;
-use Rpc\Exceptions\Rpc\InvalidRequestException;
-use Rpc\Exceptions\Rpc\MethodNotFoundException;
-use Rpc\Exceptions\Rpc\ParseErrorException;
-use Rpc\Http\Rpc\ErrorObject;
-use Rpc\Http\Rpc\ResponseBuilder;
 
 class App extends Micro
 {

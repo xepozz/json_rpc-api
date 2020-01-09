@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-
+use Api\Controllers\ShortenController;
 use Phalcon\Mvc\Router;
 
 /**
@@ -9,6 +10,6 @@ use Phalcon\Mvc\Router;
  */
 
 $router->add('/shorten', [
-    'controller' => \Rpc\Controllers\ShortenController::class,
+    'controller' => ShortenController::class,
     'action'     => 'index',
 ]);

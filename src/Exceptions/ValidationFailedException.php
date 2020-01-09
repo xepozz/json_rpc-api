@@ -1,8 +1,8 @@
 <?php
 
-namespace Rpc\Exceptions;
+namespace Api\Exceptions;
 
-use Rpc\Exceptions\Rpc\UserException;
+use Api\Exceptions\Rpc\UserException;
 use Throwable;
 
 class ValidationFailedException extends UserException

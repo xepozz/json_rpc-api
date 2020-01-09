@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rpc\Models;
+namespace Api\Models;
 
 use Phalcon\Mvc\Model;
 

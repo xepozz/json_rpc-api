@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rpc\Providers;
+namespace Api\Providers;
 
 use Phalcon\Config;
 use Phalcon\Di\DiInterface;

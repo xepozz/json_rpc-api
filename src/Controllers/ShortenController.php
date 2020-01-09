@@ -1,12 +1,12 @@
 <?php
 
-namespace Rpc\Controllers;
+namespace Api\Controllers;
 
-use Rpc\Components\ErrorCollector;
-use Rpc\Exceptions\ValidationFailedException;
-use Rpc\Forms\CreateLinkForm;
-use Rpc\Http\Rpc\AbstractController;
-use Rpc\Service\UrlGenerator;
+use Api\Components\ErrorCollector;
+use Api\Exceptions\ValidationFailedException;
+use Api\Forms\CreateLinkForm;
+use Api\Http\Rpc\AbstractController;
+use Api\Service\UrlGenerator;
 
 class ShortenController extends AbstractController
 {

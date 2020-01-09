@@ -1,6 +1,6 @@
 <?php
 
-namespace Rpc\Components;
+namespace Api\Components;
 
 use Phalcon\Di\Injectable;
 

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Rpc\Providers;
+namespace Api\Providers;
 
+use Api\App;
 use Exception;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Router;
-use Rpc\App;
 
 class RouterProvider implements ServiceProviderInterface
 {
