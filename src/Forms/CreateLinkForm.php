@@ -6,7 +6,7 @@ namespace Rpc\Forms;
 
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
-use Phalcon\Validation\Validator\Url;
+use Phalcon\Validation\Validator\Callback;
 
 class CreateLinkForm extends Form
 {
@@ -15,11 +15,16 @@ class CreateLinkForm extends Form
         $password = new Text('link');
         $password->addValidators(
             [
-                new Url(
+                new Callback(
                     [
-                        "message" => ":field must be a url",
+                        'callback' => function ($data) {
+                            $pattern = '#^https?://[\w\-.]+/?[.*]#';
+
+                            return preg_match($pattern, $data['link']) === 1;
+                        },
+                        'message' => ':field even number of products are accepted',
                     ]
-                )
+                ),
             ]
         );
         $this->add($password);
