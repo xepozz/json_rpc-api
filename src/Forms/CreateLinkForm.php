@@ -24,7 +24,7 @@ class CreateLinkForm extends Form
                 new Callback(
                     [
                         'callback' => function ($data) {
-                            $pattern = '#^https?://[\w\-.]+/?[.*]#';
+                            $pattern = '#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#';
 
                             return preg_match($pattern, $data['link']) === 1;
                         },
