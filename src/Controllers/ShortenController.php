@@ -12,12 +12,12 @@ class ShortenController extends AbstractController
 {
     public function index(array $params)
     {
-        /* @var $urlGenerator \Rpc\Service\UrlGenerator */
+        /* @var $urlGenerator \Api\Service\UrlGenerator */
         $urlGenerator = $this->getDI()->get(UrlGenerator::class);
 
         $form = new CreateLinkForm();
         if (!$form->isValid($params)) {
-            /* @var $collector \Rpc\Components\ErrorCollector */
+            /* @var $collector \Api\Components\ErrorCollector */
             $collector = $this->getDI()->get(ErrorCollector::class);
 
             return $this->error(new ValidationFailedException($collector->collect($form)));

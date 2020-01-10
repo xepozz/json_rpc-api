@@ -45,7 +45,7 @@ class UrlGenerator extends Injectable
     {
         $model = new Links(['uniqueId' => $id, 'link' => $link]);
         if (!$model->save()) {
-            /* @var $collector \Rpc\Components\ErrorCollector */
+            /* @var $collector \Api\Components\ErrorCollector */
             $collector = $this->getDI()->get(ErrorCollector::class);
 
             throw new ValidationFailedException($collector->collect($model));
